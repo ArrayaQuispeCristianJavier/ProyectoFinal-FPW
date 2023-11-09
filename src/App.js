@@ -13,18 +13,19 @@ function App() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="tp1">Trabajo practico 1</Nav.Link>
-                            <Nav.Link href="tp2">Trabajo practico 2</Nav.Link>
-                            <Nav.Link href="tp3">Trabajo practico 3</Nav.Link>
-                            <Nav.Link href="tp4">Integrantes</Nav.Link>
+                            <Nav.Link href="comparadorPrecio">Comparador de precio</Nav.Link>
+                            <Nav.Link href="dude">Dude</Nav.Link>
+                            <Nav.Link href="naveEspacial">Nave espacial</Nav.Link>
+                            <Nav.Link href="listaTarea">Lista de tarea</Nav.Link>
+                            <Nav.Link href="juegoNino">Juego para ninos</Nav.Link>
+                            <Nav.Link href="integrantes">Integrantes</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
             <Routes>
-                {/* <Route path='tp1' element={}/> */}
-                {/* <Route></Route>
-                <Route></Route> */}
+                {/* <Route path='comparadorPrecio' element={}/> */}
+                
             </Routes>
         </Router>
     )
