@@ -35,6 +35,10 @@ function Productos() {
     console.log("Lista de producto: ", productos);
    };
 
+   const productoMenorPrecio = () => {
+   
+   }
+
    useEffect(()=>{
     mostrarProducto();
    }, [productos])
@@ -42,17 +46,34 @@ function Productos() {
 
   return(
     <>
-    <h1>Comparador de precios</h1>
-    <div>
-    <p>Nuevo Producto: {JSON.stringify(newProductoObj)}</p>
-    <p>Lista de Productos: {JSON.stringify(productos)}</p>
-    <p>Registro de Producto: {registroProducto}</p>
-    <p>Producto Barato: {JSON.stringify(productoBarato)}</p>
-    <p>Registro de Productos Comparados: {registroProductoComparado}</p>
-    <button type='button' onClick={nuevoProducto}>Guardar producto</button>
-   </div>
-   
-   </>
+      <h1>Comparador de precios</h1>
+      <div>
+        <form>
+          <label>Nombre del producto</label><br />
+          <input
+            value={newProductoObj.nombreProducto}
+            onChange={(e) => setNewProductoObj({ ...newProductoObj, nombreProducto: e.target.value })}
+          /><br />
+
+          <label>Precio del producto</label><br />
+          <input
+            type="number"
+            value={newProductoObj.precioProducto}
+            onChange={(e) => setNewProductoObj({ ...newProductoObj, precioProducto: e.target.value })}
+          /><br />
+
+          <label>Nombre del comercio</label> <br />
+          <input
+            value={newProductoObj.nombreLocal}
+            onChange={(e) => setNewProductoObj({ ...newProductoObj, nombreLocal: e.target.value })}
+          /><br />
+
+          <button type='button' onClick={nuevoProducto}>Guardar producto</button>
+          <button type='button' onClick={productoMenorPrecio}>Guardar el producto de menor precio</button>
+
+        </form>
+      </div>
+    </>
   )
 }
 export default Productos;
