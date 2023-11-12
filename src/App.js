@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Productos from './components/Producto';
+import JuegoNave from './components/AppPhaser';
 function App() {
     /*El componente ruteador que contiene el componente rutas y describe cada una de ellas osea de las rutas*/
     return (
@@ -17,7 +18,7 @@ function App() {
 
                             <Nav.Link href="/comparadorPrecio">Comparador de precio</Nav.Link>
                             <Nav.Link href="/dude">Dude</Nav.Link>
-                            <Nav.Link href="/naveEspacial">Nave espacial</Nav.Link>
+                            <Nav.Link href="/juegoNave">Nave espacial</Nav.Link>
                             <Nav.Link href="/listaTarea">Lista de tarea</Nav.Link>
                             <Nav.Link href="/juegoNino">Juego para ninos</Nav.Link>
                             <Nav.Link href="/integrantes">Integrantes</Nav.Link>
@@ -26,7 +27,8 @@ function App() {
                 </Container>
             </Navbar>
             <Routes>
-                <Route path='comparadorPrecio' element={<Productos/>}/>          
+                <Route path='comparadorPrecio' element={<Productos/>}/>  
+                <Route path='juegoNave' element={<JuegoNave/>}/>        
             </Routes>
         </Router>
     )

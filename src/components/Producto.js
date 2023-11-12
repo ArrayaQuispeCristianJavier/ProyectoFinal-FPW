@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 function Productos() {
-  
-    const ProductoObj = {
+
+  const ProductoObj = {
     nombreProducto: "",
-    precioProducto: 0,
-    nombreLocal: ""
+    nombreLocal: "",
+    precioProducto: 0
+
   };
 
   const [newProductoObj, setNewProductoObj] = useState(ProductoObj);
@@ -13,38 +14,64 @@ function Productos() {
   const [productos, setProductos] = useState([]);
   //Estado para el registro del producto
   const [registroProducto, setRegistroProducto] = useState("");
-  //Estado para el producto mas barato
-  const [productoBarato, setProductoBarato] = useState(null);
   //Estado para el registro de producto comparados
   const [registroProductoComparado, setRegistroProductoComparado] = useState("");
 
- const nuevoProducto = () => {
+  /*ProductoMenorPrecio*/
+  const [precio, setPrecio] = useState(0);
+  const [nombre, setNombre] = useState("");
+  const [local, setLocal] = useState("");
+
+  const nuevoProducto = () => {
     //Copia del array 'productos' con el (...), para no modificar el array existente, sino creamos un nuevo arreglo que contiene mas newProductObj
     const newProducto = [...productos, newProductoObj]
     //Todo lo que se registre en newProducto se guardara en setProducto
     setProductos(newProducto);
     //Reiniciar o limpiar los campos
     setNewProductoObj({
-        nombreLocal:"",
-        nombreProducto: "",
-        precioProducto: 0
+      nombreProducto: "",
+      nombreLocal: "",
+      precioProducto: 0
     })
-   }
+  }
 
-   const mostrarProducto = () => {
+  const mostrarProducto = () => {
+    let registroProducto ="";
+    
     console.log("Lista de producto: ", productos);
-   };
+  };
 
-   const productoMenorPrecio = () => {
-   
-   }
+  const productoMenorPrecio = () => {
+    let productoBarato = null;
+    productos.forEach((elemento) => {
+      setPrecio(elemento.precio);
+      setLocal(elemento.local);
+      setNombre(elemento.nombre);
 
-   useEffect(()=>{
+      if (!productoBarato || (nombre === productoBarato.nombre && precio < productoBarato.precio) || (nombre !== productoBarato.nombre)) {
+        setProductoBarato({
+          nombre: nombre,
+          precio: precio,
+          local: local
+        })
+        console.log("Se guardo el producto comparado" + productoBarato);
+      }
+      if (productoBarato){
+      setRegistroProductoComparado(`Nombre del producto: ${productoBarato.nombre} -- Precio del producto más bajo: $${productoBarato.precio} -- Nombre del local: ${productoBarato.local}`)
+      }
+    })
+    console.log(registroProductoComparado);
+  };
+
+
+
+  useEffect(() => {
     mostrarProducto();
-   }, [productos])
+    productoMenorPrecio();
+  }, [productos, registroProductoComparado])
 
 
-  return(
+  return (
     <>
       <h1>Comparador de precios</h1>
       <div>
