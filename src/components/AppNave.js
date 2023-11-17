@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
 import { useState, useEffect } from 'react';
-import Menu from './scenePhaser/Menu';
-import Inicio from './scenePhaser/Inicio';
-import Derrota from './scenePhaser/Derrota';
-import Escena2 from './scenePhaser/Escena2';
-import Victoria from './scenePhaser/Victoria';
+import Menu from './sceneNave/Menu';
+import Inicio from './sceneNave/Inicio';
+import Derrota from './sceneNave/Derrota';
+import Escena2 from './sceneNave/Escena2';
+import Victoria from './sceneNave/Victoria';
 function AppPhaser() {
-    
+
     const [listo, setListo] = useState(false);
 
     useEffect(() => {
@@ -28,11 +28,10 @@ function AppPhaser() {
         };
         let game = new Phaser.Game(config);
         game.events.on("Listo", setListo)
-        return()=>{
+        return () => {
             setListo(false);
             game.destroy(true);
         }
-    },[listo]);
+    }, [listo]);
 }
-
 export default AppPhaser;

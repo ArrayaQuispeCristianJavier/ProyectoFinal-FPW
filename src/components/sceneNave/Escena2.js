@@ -1,19 +1,17 @@
 class Escena2 extends Phaser.Scene {
     constructor() {
-
         super("Escena2");
 
         this.scoreText = "";
 
-
-
         this.vidaText = "";
 
-
-
         this.vidaJefeText = "";
+
         this.vidaJefe = 250;
+
         this.vida = 100;
+
         this.powerUpActivado = false;
     }
     preload() {
@@ -34,6 +32,7 @@ class Escena2 extends Phaser.Scene {
         this.load.image('powerUp', '/img/balasPowerUp.png');
 
     }
+
     create() {
 
 
@@ -114,22 +113,22 @@ class Escena2 extends Phaser.Scene {
         this.physics.add.overlap(this.enemigoJefe, this.disparoNave, this.danioJefe, null, this);
 
         this.PowerUp();
+
         this.physics.add.overlap(this.nave, this.movePowerUp, this.ObtenerPowerUp, null, this);
 
 
         this.disparosDelJefe();
 
 
-
-
         //Para controlar el puntaje
-        this.vidaJefeText = this.add.text(16, 16, 'Vida del jefe:250', { fontSize: '35px', fill: '#EEEEEE' });
+        this.vidaJefeText = this.add.text(16, 16, `Vida del jefe:${this.vidaJefe}`, { fontSize: '35px', fill: '#EEEEEE' });
 
         //Para controlar la vida de la nave
-        this.vidaText = this.add.text(16, 50, 'Vida:100', { fontSize: '35px', fill: '#EEEEEE' });
+        this.vidaText = this.add.text(16, 50, `Vida:${this.vida}`, { fontSize: '35px', fill: '#EEEEEE' });
         this.reload = true;
 
     }
+
     disparosDelJefe() {
         this.time.addEvent({
             delay: 800,
@@ -138,6 +137,7 @@ class Escena2 extends Phaser.Scene {
             loop: true
         });
     }
+
     realizarDisparoJefe() {
 
         let aleatorios = Math.floor(10 * Phaser.Math.FloatBetween(0.1, 0.3));
@@ -168,6 +168,7 @@ class Escena2 extends Phaser.Scene {
         }
 
     }
+
     update() {
         /*-------Controles de la nave--------*/
         // Lógica de movimiento de la nave
@@ -205,16 +206,17 @@ class Escena2 extends Phaser.Scene {
 
             this.Disparo();
 
-
         }
 
         if (this.vidaJefe == 0) {
             this.scene.start('Victoria');
             console.log("Juego Terminado");
+            console.log("Victoria!");
         }
         if (this.vida <= 0) {
             this.scene.start('Derrota');
             console.log("Se cambio a la escena derrota");
+            console.log("Derrota!");
         }
 
     }
@@ -230,7 +232,6 @@ class Escena2 extends Phaser.Scene {
         }
     }
 
-
     /*Lanzamiento del power up*/
     PowerUp() {
         /*Se crea el powerUp en una posicion aleatorio entre x(En index el width es 1000 )
@@ -245,25 +246,25 @@ class Escena2 extends Phaser.Scene {
         this.movePowerUp.setBounce(1);
         /*Tamano del power up*/
         this.movePowerUp.setScale(0.3);
-
     }
+
     /*Funcion para obtener el power up y ejecute un tipo de disparo*/
     ObtenerPowerUp() {
         console.log("Se obtuvo el power up");
         this.movePowerUp.destroy();
         this.powerUpActivado = true;
-        for (let i = 0; i < 3; i++) {
+        //Dispara 5 bala por que 4 son del power up, la 5ta es de la bala ya definida anteriormente
+        for (let i = 0; i < 4; i++) {
             this.recarga();
             let dispersionBala = this.disparoNave.create(this.nave.x, this.nave.y, 'disparoNave');
             dispersionBala.velocidad = 40;
-            dispersionBala.setVelocityY(dispersionBala.velocidad + i * 70);
-            dispersionBala.setVelocityX(2000)
-            console.log("Se esta disparando en rafaga");
+            //Primero va a multiplicar el valor de i(1) x 100 = 100 y lo mismo para los siguiente
+            //Una vez multiplicado se sumara 40 que es el valor de dispersionBala.valocidad + el resultado de i * 100
+            dispersionBala.setVelocityY(dispersionBala.velocidad + i * 100);
+            dispersionBala.setVelocityX(2000);
+            console.log("Se esta disparando en pentafaga");
         }
     }
-
-
-
 
     danioJefe(jefe, disparoJefe) {
 
@@ -275,14 +276,14 @@ class Escena2 extends Phaser.Scene {
             this.enemigoJefe.destroy();
             //Agregar la escena de victoria
         }
-
+        console.log("El enemigo recibio danio: " + this.vidaJefe + " de salud");
     }
     /*Cuando el jefe nos da un disparo ejecuta esta accion*/
     danioNave(nave, disparoJefe) {
         this.vida -= 30;
         this.vidaText.setText('Vida: ' + this.vida);
         disparoJefe.destroy();
-
+        console.log("Vida: " + this.vida);
     }
     recarga() {
         this.reload = false;
