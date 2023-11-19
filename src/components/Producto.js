@@ -1,103 +1,121 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Productos = () => {
-  
-  const [precio, setPrecio] = useState(0);
-  const [nombre, setNombre] = useState("");
-  const [local, setLocal] = useState("");
-  const [productos, setProductos] = useState([]);
-  const [guardarProductoBarato, setGuardarProductoBarato] = useState(null);
-
-
-  const nuevoProducto = () => {
-    const nuevoProducto = { nombre, precio, local };
-    setProductos((anterioresProductos) => [...anterioresProductos, nuevoProducto]);
-    mostrarProducto();
-    setNombre("");
-    setPrecio(0);
-    setLocal("");
+function Productos() {
+  const productoObj = {
+    nombrePro: "",
+    precioPro: 0,
+    local: ""
   };
 
-  const productoMenorPrecio = () => {
-    let productoBarato = null;
+  /*--------ESTADOS--------*/
+  //registra los productos que se registraron
+  const [registroObj, setRegistroObj] = useState(productoObj);
+  //Guarda los objeto registrado
+  const [guardarObj, setGuardarObj] = useState([]);
 
-    productos.forEach((elemento) => {
-      let precio = elemento.precio;
-      let nombre = elemento.nombre;
-      let local = elemento.local;
+  //Guardar precio minimo
+  const [precioMinimo, setPrecioMinimo] = useState([]);
+  //Guardar nombre del producto
+  const [nombresProducto, setNombresProducto] = useState([]);
+  /*----------------------------*/
 
-      if (!productoBarato || (nombre === productoBarato.nombre && precio < productoBarato.precio) || (nombre !== productoBarato.nombre)) {
-        productoBarato = {
-          nombre: nombre,
-          precio: precio,
-          local: local
-        };
-      }
-    });
-
-    if (productoBarato) {
-      setGuardarProductoBarato(`Nombre del producto: ${productoBarato.nombre} -- Precio del producto más bajo: $${productoBarato.precio} -- Nombre del local: ${productoBarato.local}`);
-    }
-  };
-
+  /*-------FUNCIONES-------*/
+  //Esta funcion se encargar de mostrar los productos registrado en la pantalla
   const mostrarProducto = () => {
-    let registroProducto = "";
-
-    productos.forEach((elemento) => {
-      registroProducto = registroProducto + `Nombre del producto: ${elemento.nombre} -- Precio del producto: $ ${elemento.precio} -- Nombre del local: ${elemento.local}\n`;
-    });
-
-    console.log(registroProducto);
+    console.log("Producto registrado");
+    // Agregar el nuevo producto al principio del arreglo
+    setGuardarObj([...guardarObj, registroObj]);
+    if (!nombresProducto.includes(registroObj.nombrePro)) {
+      //Se esta guardando el nombre del producto para comparar
+      setNombresProducto([...nombresProducto, registroObj.nombrePro])
+    }
+    // Limpiar el formulario
+    setRegistroObj(productoObj);
   };
+
+  const encontrarProductoBarato = () => {
+    setPrecioMinimo([])
+    nombresProducto.forEach((element) => {
+      let nombre = element;
+      let minimo = Infinity;
+      let indiceMinimo = -1;
+      guardarObj.forEach((item, indice) => {
+        if (nombre == item.nombrePro) {
+          if (parseFloat(item.precioPro) < parseFloat(minimo)) {
+            minimo = item.precioPro
+            indiceMinimo = indice
+          }
+        }
+      })
+      if (indiceMinimo !== -1) {
+        setPrecioMinimo([...precioMinimo, guardarObj[indiceMinimo]])
+      }
+    })
+    console.log("El producto mas barato es: ", precioMinimo);
+  }
+  /*------------------------*/
+
+  useEffect(() => {
+    console.log("Productos registrados:", guardarObj);
+    console.log("El producto mas barato es: ", precioMinimo);
+  }, [guardarObj]);
 
   return (
-    <div style={{ fontFamily: '-moz-initial' }}>
+    <>
       <h1>Comparador de precios</h1>
-      <div>
-        <form>
-          <label>
-            Nombre del producto
-            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Precio del producto
-            <input type="number" value={precio} onChange={(e) => setPrecio(e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Nombre del comercio
-            <input type="text" value={local} onChange={(e) => setLocal(e.target.value)} />
-          </label>
-          <br />
-          <button type="button" onClick={nuevoProducto}>
-            Guardar producto
-          </button>
-          <button type="button" onClick={productoMenorPrecio}>
-            Obtener producto barato
-          </button>
-        </form>
-      </div>
 
+      <h5>Ingrese el producto</h5>
+      <input
+        type='text'
+        value={registroObj.nombrePro}
+        onChange={evento => setRegistroObj({ ...registroObj, nombrePro: evento.target.value })}
+      ></input>
+
+      <h5>Ingrese el precio</h5>
+      <input
+        type='number'
+        value={registroObj.precioPro}
+        onChange={evento => setRegistroObj({ ...registroObj, precioPro: evento.target.value })}
+      ></input>
+
+      <h5>Ingrese el nombre del local</h5>
+      <input
+        type='text'
+        value={registroObj.local}
+        onChange={evento => setRegistroObj({ ...registroObj, local: evento.target.value })}
+      ></input>
+
+      <button type="button" onClick={mostrarProducto}>
+        Guardar Producto
+      </button>
+
+
+
+      {/* Mostramos productos en la página */}
       <div>
-        <h2>Productos Registrados:</h2>
-        {productos.map((producto, index) => (
+        <h2>Productos Registrados</h2>
+        {guardarObj.map((element, index) => (
           <div key={index}>
-            <p>
-              Nombre: {producto.nombre}, Precio: ${producto.precio}, Local: {producto.local}
-            </p>
+            <p>Nombre: {element.nombrePro}</p>
+            <p>Precio: {element.precioPro}</p>
+            <p>Local: {element.local}</p>
           </div>
         ))}
       </div>
-
+      {/* Mostrar los productos mas baratos */}
       <div>
-        <h2>Producto más barato:</h2>
-        
-        <p>{guardarProductoBarato}</p>
-        
+        <button type='button' onClick={encontrarProductoBarato}>Encontrar producto barato</button>
+        <h2>Productos con el precio bajo</h2>
+        {precioMinimo.map((e, indice) => (
+          <div key={indice}>
+            <p>Nombre: {e.nombrePro}</p>
+            <p>Precio: {e.precioPro}</p>
+            <p>Local: {e.local}</p>
+          </div>
+        ))}
       </div>
-    </div>
+    </>
   );
-};
+}
 
 export default Productos;
