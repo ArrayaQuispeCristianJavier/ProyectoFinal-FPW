@@ -1,6 +1,6 @@
 [
     {
-        "img":"integrante1",
+        "img":"cristianArraya",
         "nombre":"Cristian Javier",
         "apellido":"Arraya Quispe",
         "dni":"46.472.328",
@@ -9,21 +9,21 @@
         "Lu":"TUV000651"
     },
     {
-        "img":"integrante1",
+        "img":"integranteLucasAmerise",
         "nombre":"Lucas Tomas",
         "apellido":"Amerise",
         "dni":"45.666.817",
         "proyecto":"Registro de pendiente",
-        "link":"https://github.com/BenDant?tab=repositories",
+        "link":"https://github.com/LucasAmerise?tab=repositories",
         "Lu":"TUV000562"
     },
     {
-        "img":"integrante1",
+        "img":"mateoBenjamin",
         "nombre":"Mateo Benjamin",
         "apellido":"Dantuene",
         "dni":"44.857.341",
         "proyecto":"Dude",
-        "link":"https://github.com/LucasAmerise?tab=repositories",
+        "link":"https://github.com/BenDant?tab=repositories",
         "Lu":"TUV000598"
     }
 ]
