@@ -7,6 +7,7 @@ import Productos from './components/Producto';
 import JuegoNave from './components/AppNave';
 import Integrantes from './components/Integrantes';
 import JuegoAnimal from './components/AppAnimales';
+import NotasPendiente from './components/AppListaNota';
 function App() {
     /*El componente ruteador que contiene el componente rutas y describe cada una de ellas osea de las rutas*/
     return (
@@ -21,7 +22,7 @@ function App() {
                             <Nav.Link href="/comparadorPrecio">Comparador Precio</Nav.Link>
                             <Nav.Link href="/dude">Dude</Nav.Link>
                             <Nav.Link href="/juegoNave">Nave espacial</Nav.Link>
-                            <Nav.Link href="/listaTarea">Lista de tarea</Nav.Link>
+                            <Nav.Link href="/listaPendiente">Lista Pendiente</Nav.Link>
                             <Nav.Link href="/juegoAnimales">Juego para ninos</Nav.Link>
                             <Nav.Link href="/Integrantes">Integrantes</Nav.Link>
 
@@ -34,6 +35,7 @@ function App() {
                 <Route path='juegoNave' element={<JuegoNave />} />
                 <Route path='juegoAnimales' element={<JuegoAnimal />} />
                 <Route path ='Integrantes' element={<Integrantes />}/>
+                <Route path ='listaPendiente' element={<NotasPendiente />}/>
             </Routes>
         </Router>
     )
